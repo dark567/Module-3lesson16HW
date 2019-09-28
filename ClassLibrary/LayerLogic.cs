@@ -38,6 +38,11 @@ namespace ClassLibrary
             }
         }
 
+        /// <summary>
+        /// Check Is Prime
+        /// </summary>
+        /// <param name="_primeCheck"></param>
+        /// <returns></returns>
         public static bool IsPrime(int _primeCheck)
         {
             if(_primeCheck < 1) return false;

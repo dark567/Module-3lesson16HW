@@ -49,6 +49,9 @@ namespace ConsoleApp
             return descriptionAttribute != null ? descriptionAttribute.Description : value.ToString();
         }
 
+        /// <summary>
+        /// Show Menu In Console
+        /// </summary>
         public static void ShowMenuInConsole()
         {
             foreach (MenuItem item in Enum.GetValues(typeof(MenuItem)))
@@ -134,18 +137,8 @@ namespace ConsoleApp
                         break;
                     case (int)MenuItem.DefaultAsyncCalc:
 
-                        Stopwatch watchDefault = new Stopwatch();
+                        WorkWithSynglton();
 
-                        var singltonDefault = Singleton.GetInstance;
-
-                        watchDefault.Start();
-                        var resultDefault = singltonDefault.Calc();
-                        watchDefault.Stop();
-
-                        singltonDefault.ShowArray();
-
-                        Console.WriteLine(Environment.NewLine);
-                        Console.WriteLine($"Result:{resultDefault.Result}, watch.Elapsed.TotalSeconds:{watchDefault.Elapsed.TotalSeconds}");
                         ShowMenuInConsole();
                         break;
                     case (int)MenuItem.AsyncInputFromAndTo:
@@ -166,18 +159,8 @@ namespace ConsoleApp
 
                         } while (!prAsyncInputFromAndTo);
 
-                        Stopwatch watchInputFromAndTo = new Stopwatch();
 
-                        var singltonInputFromAndTo = Singleton.GetInstance;
-
-                        watchInputFromAndTo.Start();
-                        var resultInputFromAndTo = singltonInputFromAndTo.Calc(from: _fromAsync, to: _toAsync);
-                        watchInputFromAndTo.Stop();
-
-                        singltonInputFromAndTo.ShowArray();
-
-                        Console.WriteLine(Environment.NewLine);
-                        Console.WriteLine($"Result:{resultInputFromAndTo.Result}, watch.Elapsed.TotalSeconds:{watchInputFromAndTo.Elapsed.TotalSeconds}");
+                        WorkWithSynglton(fromAsync: _fromAsync, toAsync: _toAsync);
 
                         ShowMenuInConsole();
                         break;
@@ -199,18 +182,8 @@ namespace ConsoleApp
 
                         } while (!prAsyncInputPrimeFactors);
 
-                        Stopwatch watchInputPrimeFactors = new Stopwatch();
+                        WorkWithSynglton(primeFirst: _primeFirstAsync, primeSecond: _primeSecondAsync);
 
-                        var singltonInputPrimeFactors = Singleton.GetInstance;
-
-                        watchInputPrimeFactors.Start();
-                        var resultInputPrimeFactors = singltonInputPrimeFactors.Calc(primeFirst: _primeFirstAsync, primeSecond: _primeSecondAsync);
-                        watchInputPrimeFactors.Stop();
-
-                        singltonInputPrimeFactors.ShowArray();
-
-                        Console.WriteLine(Environment.NewLine);
-                        Console.WriteLine($"Result:{resultInputPrimeFactors.Result}, watch.Elapsed.TotalSeconds:{watchInputPrimeFactors.Elapsed.TotalSeconds}");
                         ShowMenuInConsole();
                         break;
 
@@ -224,8 +197,27 @@ namespace ConsoleApp
                 }
             }
         }
+
+        private static void WorkWithSynglton(int fromAsync = 1, int toAsync = 100, int primeFirst = 3, int primeSecond = 5)
+        {
+            Stopwatch watchDefault = new Stopwatch();
+
+            var singltonDefault = Singleton.GetInstance;
+
+            watchDefault.Start();
+            var resultDefault = singltonDefault.Calc(from: fromAsync, to: toAsync, primeFirst: primeFirst, primeSecond: primeSecond);
+            watchDefault.Stop();
+
+            singltonDefault.ShowArray();
+
+            Console.WriteLine(Environment.NewLine);
+            Console.WriteLine($"Result:{resultDefault.Result}, watch.Elapsed.TotalSeconds:{watchDefault.Elapsed.TotalSeconds}");
+        }
     }
 
+    /// <summary>
+    /// Console Colors
+    /// </summary>
     public static class ConsoleColors
     {
         public enum EnumConsoleColors

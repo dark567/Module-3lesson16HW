@@ -14,7 +14,7 @@ namespace ConsoleApp
         private ArrayList ArrayInt;
 
         /// <summary>
-        /// thread-safe synglton
+        /// thread-safe Synglton
         /// </summary>
         public static Singleton GetInstance
         {
@@ -33,7 +33,15 @@ namespace ConsoleApp
             }
         }
 
-        public async Task<int> Calc(int from = 1, int to = 100, int primeFirst = 3, int primeSecond = 5)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        /// <param name="primeFirst"></param>
+        /// <param name="primeSecond"></param>
+        /// <returns></returns>
+        public async Task<int> Calc(int from, int to, int primeFirst, int primeSecond)
         {
             //var sum = a + b;
             InitArray(from, to);
@@ -42,6 +50,12 @@ namespace ConsoleApp
             return task.Id;
         }
 
+        /// <summary>
+        /// Change Array List
+        /// </summary>
+        /// <param name="primeFirst"></param>
+        /// <param name="primeSecond"></param>
+        /// <returns></returns>
         public async Task ChangeArrayList(int primeFirst, int primeSecond)
         {
             for (int i = 0; i < ArrayInt.Count; i++)
@@ -52,6 +66,11 @@ namespace ConsoleApp
             }
         }
 
+        /// <summary>
+        /// Init ArrayList
+        /// </summary>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
         public void InitArray(int from, int to)
         {
             int Length = to - from;
@@ -64,6 +83,9 @@ namespace ConsoleApp
 
         }
 
+        /// <summary>
+        /// Show menu
+        /// </summary>
         public void ShowArray()
         {
             for (int i = 0; i < ArrayInt.Count; i++)
