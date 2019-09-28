@@ -22,13 +22,13 @@ namespace ConsoleApp
             InputFromAndTo = 2,
             [Description("\t [3] User introduces prime factors")]
             InputPrimeFactors = 3,
-            [Description("\t [4] Default Async calc 1..100 (3&5)")]
-            Todo1 = 4,
-            [Description("\t [5] todo 2")]
-            Todo2 = 5,
-            [Description("\t [5] todo 3")]
-            Todo3 = 6,
-            [Description("\t [6] Quit")]
+            [Description("\t [4] Async ... Default  calc 1..100 (3&5)")]
+            DefaultAsyncCalc = 4,
+            [Description("\t [5] Async ... User Input From And To")]
+            AsyncInputFromAndTo = 5,
+            [Description("\t [6] Async ... User introduces Prime factors")]
+            AsyncInputPrimeFactors = 6,
+            [Description("\t [7] Quit")]
             Quit = 7
         }
 
@@ -124,7 +124,7 @@ namespace ConsoleApp
                         do
                         {
                             Console.Write("Input PrimeSecond[Buzz]:");
-                            prInputPrimeFactors = int.TryParse(Console.ReadLine(), out _primeSecond) && LayerLogic.IsPrime(_primeSecond); ;
+                            prInputPrimeFactors = int.TryParse(Console.ReadLine(), out _primeSecond) && LayerLogic.IsPrime(_primeSecond) && _primeFirst != _primeSecond;
 
                         } while (!prInputPrimeFactors);
 
@@ -132,32 +132,85 @@ namespace ConsoleApp
 
                         ShowMenuInConsole();
                         break;
-                    case (int)MenuItem.Todo1:
+                    case (int)MenuItem.DefaultAsyncCalc:
 
-                        Stopwatch watch = new Stopwatch();
-                        
+                        Stopwatch watchDefault = new Stopwatch();
 
-                        var singlton = Singleton.GetInstance;
+                        var singltonDefault = Singleton.GetInstance;
 
-                        // var c = singlton.Sum(2, 2);
+                        watchDefault.Start();
+                        var resultDefault = singltonDefault.Calc();
+                        watchDefault.Stop();
 
-                        singlton.InitArray();
-                        watch.Start();
-                        var c = singlton.DefaultCalc(/*2, 2*/);
-                        watch.Stop();
-
-                        singlton.ShowArray();
+                        singltonDefault.ShowArray();
 
                         Console.WriteLine(Environment.NewLine);
-                        Console.WriteLine($"Result:{c.Result}, watch.Elapsed.TotalSeconds:{watch.Elapsed.TotalSeconds}");
+                        Console.WriteLine($"Result:{resultDefault.Result}, watch.Elapsed.TotalSeconds:{watchDefault.Elapsed.TotalSeconds}");
                         ShowMenuInConsole();
                         break;
-                    case (int)MenuItem.Todo2:
+                    case (int)MenuItem.AsyncInputFromAndTo:
+
+                        bool prAsyncInputFromAndTo = false;
+                        int _fromAsync, _toAsync;
+                        do
+                        {
+                            Console.Write("Input From:");
+                            prAsyncInputFromAndTo = int.TryParse(Console.ReadLine(), out _fromAsync) && _fromAsync >= 1;
+
+                        } while (!prAsyncInputFromAndTo);
+
+                        do
+                        {
+                            Console.Write("Input To:");
+                            prAsyncInputFromAndTo = int.TryParse(Console.ReadLine(), out _toAsync) && _toAsync > _fromAsync;
+
+                        } while (!prAsyncInputFromAndTo);
+
+                        Stopwatch watchInputFromAndTo = new Stopwatch();
+
+                        var singltonInputFromAndTo = Singleton.GetInstance;
+
+                        watchInputFromAndTo.Start();
+                        var resultInputFromAndTo = singltonInputFromAndTo.Calc(from: _fromAsync, to: _toAsync);
+                        watchInputFromAndTo.Stop();
+
+                        singltonInputFromAndTo.ShowArray();
+
+                        Console.WriteLine(Environment.NewLine);
+                        Console.WriteLine($"Result:{resultInputFromAndTo.Result}, watch.Elapsed.TotalSeconds:{watchInputFromAndTo.Elapsed.TotalSeconds}");
 
                         ShowMenuInConsole();
                         break;
-                    case (int)MenuItem.Todo3:
+                    case (int)MenuItem.AsyncInputPrimeFactors:
 
+                        bool prAsyncInputPrimeFactors = false;
+                        int _primeFirstAsync, _primeSecondAsync;
+                        do
+                        {
+                            Console.Write("Input PrimeFirst[Fizz]:");
+                            prAsyncInputPrimeFactors = int.TryParse(Console.ReadLine(), out _primeFirstAsync) && LayerLogic.IsPrime(_primeFirstAsync);
+
+                        } while (!prAsyncInputPrimeFactors);
+
+                        do
+                        {
+                            Console.Write("Input PrimeSecond[Buzz]:");
+                            prAsyncInputPrimeFactors = int.TryParse(Console.ReadLine(), out _primeSecondAsync) && LayerLogic.IsPrime(_primeSecondAsync) && _primeFirstAsync != _primeSecondAsync;
+
+                        } while (!prAsyncInputPrimeFactors);
+
+                        Stopwatch watchInputPrimeFactors = new Stopwatch();
+
+                        var singltonInputPrimeFactors = Singleton.GetInstance;
+
+                        watchInputPrimeFactors.Start();
+                        var resultInputPrimeFactors = singltonInputPrimeFactors.Calc(primeFirst: _primeFirstAsync, primeSecond: _primeSecondAsync);
+                        watchInputPrimeFactors.Stop();
+
+                        singltonInputPrimeFactors.ShowArray();
+
+                        Console.WriteLine(Environment.NewLine);
+                        Console.WriteLine($"Result:{resultInputPrimeFactors.Result}, watch.Elapsed.TotalSeconds:{watchInputPrimeFactors.Elapsed.TotalSeconds}");
                         ShowMenuInConsole();
                         break;
 

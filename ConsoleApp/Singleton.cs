@@ -11,7 +11,7 @@ namespace ConsoleApp
     {
         private static Singleton _instance = null;
         private static object _locker = new Object();
-        private ArrayList ArrayInt = new ArrayList();
+        private ArrayList ArrayInt;
 
         /// <summary>
         /// thread-safe synglton
@@ -33,39 +33,33 @@ namespace ConsoleApp
             }
         }
 
-        public async Task<int> DefaultCalc(int from = 1, int to = 100)
+        public async Task<int> Calc(int from = 1, int to = 100, int primeFirst = 3, int primeSecond = 5)
         {
             //var sum = a + b;
-
-            var task = ChangeArrayList();
+            InitArray(from, to);
+            var task = ChangeArrayList(primeFirst, primeSecond);
             await task;
             return task.Id;
         }
 
-        public async Task ChangeArrayList()
+        public async Task ChangeArrayList(int primeFirst, int primeSecond)
         {
             for (int i = 0; i < ArrayInt.Count; i++)
             {
-                if (ArrayInt[i] is Int32 && (int)ArrayInt[i] % 3 == 0 && (int)ArrayInt[i] % 5 != 0) ArrayInt[i] = "Fizz";
-                if (ArrayInt[i] is Int32 && (int)ArrayInt[i] % 3 != 0 && (int)ArrayInt[i] % 5 == 0) ArrayInt[i] = "Buzz";
-                if (ArrayInt[i] is Int32 && (int)ArrayInt[i] % 3 == 0 && (int)ArrayInt[i] % 5 == 0) ArrayInt[i] = "FizzBuzz";
+                if (ArrayInt[i] is Int32 && (int)ArrayInt[i] % primeFirst == 0 && (int)ArrayInt[i] % primeSecond != 0) ArrayInt[i] = "Fizz";
+                if (ArrayInt[i] is Int32 && (int)ArrayInt[i] % primeFirst != 0 && (int)ArrayInt[i] % primeSecond == 0) ArrayInt[i] = "Buzz";
+                if (ArrayInt[i] is Int32 && (int)ArrayInt[i] % primeFirst == 0 && (int)ArrayInt[i] % primeSecond == 0) ArrayInt[i] = "FizzBuzz";
             }
         }
 
-        //private async Task AsyncSymulation(int delay)
-        //{
-        //    Console.WriteLine("delay started");
-        //    await Task.Run(() => { Thread.Sleep(delay * 1000); });
-        //    Console.WriteLine("delay complited");
-        //}
-
-        public void InitArray(int from = 1, int to = 100)
+        public void InitArray(int from, int to)
         {
             int Length = to - from;
+            ArrayInt = new ArrayList();
 
             for (int i = 0; i < Length; i++)
             {
-                ArrayInt.Add(i);
+                ArrayInt.Add(from++);
             }
 
         }
@@ -74,7 +68,7 @@ namespace ConsoleApp
         {
             for (int i = 0; i < ArrayInt.Count; i++)
             {
-                Console.Write($"{ArrayInt[i]} " );
+                Console.Write($"{ArrayInt[i]} ");
             }
         }
     }
