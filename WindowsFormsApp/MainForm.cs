@@ -24,6 +24,8 @@ namespace WindowsFormsApp
 
             double result = await GetSumOfRandomValuesAsync(userInput);
             richTextBox1.AppendText("Fibonacci(" + userInput + ") = " + result + "\n");
+            ReadWriteAsync.WriteLog("Fibonacci(" + userInput + ") = " + result + "\n");
+
         }
         private async Task<long> GetSumOfRandomValuesAsync(long inputValue)
         {

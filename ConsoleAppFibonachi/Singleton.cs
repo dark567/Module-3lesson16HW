@@ -36,7 +36,7 @@ namespace ConsoleAppFibonachi
             long result = 0;
             Task<long> task = Task<long>.Factory.StartNew(() =>
             {
-                result = Fibonacci(inputValue);
+                result = Fibonacci(n: inputValue);
                 return result;
             });
             await task;
